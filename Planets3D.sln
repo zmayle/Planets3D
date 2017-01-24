@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{AA5AE392-B9FE-C1DD-4220-4DE11CD7833A}") = "Planets3D", "Assembly-CSharp.csproj", "{4DEC6450-9CEC-E519-0D69-14A8D2C69FE8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4DEC6450-9CEC-E519-0D69-14A8D2C69FE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DEC6450-9CEC-E519-0D69-14A8D2C69FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DEC6450-9CEC-E519-0D69-14A8D2C69FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DEC6450-9CEC-E519-0D69-14A8D2C69FE8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

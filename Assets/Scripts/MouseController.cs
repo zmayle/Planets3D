@@ -54,7 +54,7 @@ public class MouseController : MonoBehaviour {
 		if (Input.GetButton ("Fire1")) { 
 			float thrustPower = 0.01f * mouseDistance * speed;
 			thrustPower = Mathf.Min (thrustPower, maxThrust);
-			Debug.Log ("ThrustPower: " + thrustPower);
+			//Debug.Log ("ThrustPower: " + thrustPower);
 			Vector3 thrust = thrustPower * transform.forward;
 			rb.AddForce (thrust);
 		}
