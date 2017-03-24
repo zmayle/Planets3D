@@ -68,6 +68,7 @@
      <Compile Include="Assets\Scripts\Rotator.cs" />
      <Compile Include="Assets\Scripts\Singularity.cs" />
      <Compile Include="Assets\Scripts\Teleporter.cs" />
+     <Compile Include="Assets\Scripts\Thrust.cs" />
      <Compile Include="Assets\Scripts\WinOnContact.cs" />
      <None Include="Assets\KY_effects\MagicEffectsPackFree\ReadMe.txt" />
      <None Include="Assets\Black Hole\ReadMe.txt" />
