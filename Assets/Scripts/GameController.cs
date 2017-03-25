@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour {
 	private Vector3 startPosition; // the player's starting position (set on the start of the scene)
 	private bool playerFrozen; // whether or not the player game object is currently "frozen"
 	private int fails; // the number of times the player has failed this level on this play through
+	private AudioSource music;  // the background music audio clip for the level
 
 	public Text gameText; // the Text object that the game should presently display on the screen
 	public Text failText; // the Text object that displays the number of times the player has failed
@@ -59,6 +60,8 @@ public class GameController : MonoBehaviour {
 		gameText.text = readyText;
 		freezePlayer ();
 		fails = 0;
+		// get the audio clip of the level's background music
+		music = this.GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -146,11 +149,12 @@ public class GameController : MonoBehaviour {
 
 	// handles the game when the player reaches Earth (this is a victory)
 	// Switches the gameState to victory and switches the gameText to the victory message.
-	// Also freezes the player.
+	// Also freezes the player and stops the background music.
 	public void victory () {
 		gameState = State.victory;
 		gameText.text = victoryText;
 		freezePlayer ();
+		music.Stop ();
 	}
 
 	// handles the game when the player crashes or flies off the screen
