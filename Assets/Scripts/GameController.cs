@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour {
 	private bool playerFrozen; // whether or not the player game object is currently "frozen"
 	private int fails; // the number of times the player has failed this level on this play through
 	private AudioSource music;  // the background music audio clip for the level
+	private GameObject[] wormholes; // an array containing any wormholes in this level
 
 	public Text gameText; // the Text object that the game should presently display on the screen
 	public Text failText; // the Text object that displays the number of times the player has failed
@@ -62,6 +63,8 @@ public class GameController : MonoBehaviour {
 		fails = 0;
 		// get the audio clip of the level's background music
 		music = this.GetComponent<AudioSource>();
+		// retrieve any wormholes in the level
+		wormholes = GameObject.FindGameObjectsWithTag("Wormhole");
 	}
 	
 	// Update is called once per frame
@@ -185,10 +188,14 @@ public class GameController : MonoBehaviour {
 
 	// Resets the current level to how it was at the beginning
 	// Instantiates a player object at the start position, recognizes that object as the player, and freezes the player.
+	// Also resets the wormholes in the level to be ready to teleport
 	private void resetGame () {
 		Instantiate (playerPrefab, startPosition, Quaternion.identity);
 		player = GameObject.FindWithTag ("Player");
 		checkPlayer ();
 		freezePlayer ();
+		foreach (GameObject w in wormholes) {
+			w.GetComponent<Teleporter>().setReady(true);
+		}
 	}
 }
