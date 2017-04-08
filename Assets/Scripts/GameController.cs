@@ -166,11 +166,12 @@ public class GameController : MonoBehaviour {
 		freezePlayer ();
 		music.Stop ();
 
-		// update the best score
+		// update the best score and save the scores 
 		if (ps != null) {
 			int tries = fails + 1;
 			if (tries < ps.bestScores [level - 1] || ps.bestScores [level - 1] == 0) {
 				ps.bestScores [level - 1] = tries;
+				ps.SaveData ();
 			}
 		}
 	}
