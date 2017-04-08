@@ -18,11 +18,13 @@ public class GameController : MonoBehaviour {
 	private int fails; // the number of times the player has failed this level on this play through
 	private AudioSource music;  // the background music audio clip for the level
 	private GameObject[] wormholes; // an array containing any wormholes in this level
+	private PlayerStatistics ps; // the global PlayerStatistics object
 
 	public Text gameText; // the Text object that the game should presently display on the screen
 	public Text failText; // the Text object that displays the number of times the player has failed
 	public GameObject playerPrefab; // the player object prefab to be instantiated when restarting the game
 	public int numberLevels; // the total number of levels in the game (not including the menu)
+	public int level; // the number of this level
 
 	/** inv: During state ready, the player object is "frozen" (i.e. will not be affected by forces, will not move,
 	*		and will not rotate). The ready text is also displayed, and the game waits for the player to press the
@@ -65,6 +67,10 @@ public class GameController : MonoBehaviour {
 		music = this.GetComponent<AudioSource>();
 		// retrieve any wormholes in the level
 		wormholes = GameObject.FindGameObjectsWithTag("Wormhole");
+		GameObject temp = GameObject.Find ("PlayerStatistics");
+		if (temp != null) {
+			ps = temp.GetComponent<PlayerStatistics> ();
+		}
 	}
 	
 	// Update is called once per frame
@@ -153,11 +159,20 @@ public class GameController : MonoBehaviour {
 	// handles the game when the player reaches Earth (this is a victory)
 	// Switches the gameState to victory and switches the gameText to the victory message.
 	// Also freezes the player and stops the background music.
+	// Updates the best score for this level
 	public void victory () {
 		gameState = State.victory;
 		gameText.text = victoryText;
 		freezePlayer ();
 		music.Stop ();
+
+		// update the best score
+		if (ps != null) {
+			int tries = fails + 1;
+			if (tries < ps.bestScores [level - 1] || ps.bestScores [level - 1] == 0) {
+				ps.bestScores [level - 1] = tries;
+			}
+		}
 	}
 
 	// handles the game when the player crashes or flies off the screen
