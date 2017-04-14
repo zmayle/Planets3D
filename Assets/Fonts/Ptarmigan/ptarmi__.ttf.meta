@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 018efab18e24d4f31b879bfbf45d7b9c
+timeCreated: 1492139896
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Ptarmigan
+  fontNames:
+  - Ptarmigan
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

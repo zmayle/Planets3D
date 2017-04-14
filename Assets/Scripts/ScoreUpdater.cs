@@ -15,7 +15,7 @@ public class ScoreUpdater : MonoBehaviour {
 		if (ps != null) {
 			if (ps.bestScores [level - 1] != 0) {
 				Text bestText = this.GetComponent<Text> ();
-				bestText.text = "Best: " + ps.bestScores [level - 1];
+				bestText.text = "Best: " + (ps.bestScores [level - 1] - 1);
 			}
 		}
 	}

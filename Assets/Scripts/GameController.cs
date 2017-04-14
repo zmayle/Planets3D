@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
-	private State gameState; // the game's current state (begins in the ready state)
 	private string readyText; // the message shown when in the ready state
 	private string victoryText; // the message shown when the player has won
 	private string gameOverText; // message shown when the player has lost
@@ -20,11 +19,13 @@ public class GameController : MonoBehaviour {
 	private GameObject[] wormholes; // an array containing any wormholes in this level
 	private PlayerStatistics ps; // the global PlayerStatistics object
 
+	public State gameState; // the game's current state (begins in the ready state)
 	public Text gameText; // the Text object that the game should presently display on the screen
 	public Text failText; // the Text object that displays the number of times the player has failed
 	public GameObject playerPrefab; // the player object prefab to be instantiated when restarting the game
 	public int numberLevels; // the total number of levels in the game (not including the menu)
 	public int level; // the number of this level
+	public GameObject GamePanel;
 
 	/** inv: During state ready, the player object is "frozen" (i.e. will not be affected by forces, will not move,
 	*		and will not rotate). The ready text is also displayed, and the game waits for the player to press the
@@ -38,7 +39,7 @@ public class GameController : MonoBehaviour {
 	* 	inv: During state victory, the player object is "frozen". The victory text is displayed. The game loads the
 	* 		next level when the player presses the spacebar.
 	*/
-	enum State {ready, playing, gameOver, victory};
+	public enum State {ready, playing, gameOver, victory};
 
 
 	// Use this for initialization
@@ -46,12 +47,12 @@ public class GameController : MonoBehaviour {
 		//game begins in the ready state
 		gameState = State.ready;
 		// initialize the different messages for use later on
-		readyText= "Prepare to begin your mission!\n[Press space to start]";
-		victoryText = "Mission Complete!\n[Press the spacebar to proceed or 'M' to return to the menu]";
-		gameOverText = "Mission Failed!\n[Press the spacebar to try again or 'M' to return to the menu]";
-		crashText = "You crashed!\n";
-		lostText = "You became lost in space!\n";
-		singularityText = "Spacetime anomaly!\n";
+		readyText= "PREPARE FOR LAUNCH!\npress space to start";
+		victoryText = "MISSION COMPLETE!\nspace to proceed\nM to return to menu";
+		gameOverText = "space to retry\nM to return to menu";
+		crashText = "SHIP DESTROYED!\n";
+		lostText = "LOST IN SPACE!\n";
+		singularityText = "SPACETIME ANOMALY!\n";
 		// get the player game object
 		player = GameObject.FindWithTag ("Player");
 		if (player != null)
@@ -61,6 +62,7 @@ public class GameController : MonoBehaviour {
 		checkPlayer ();
 		// put the correct text on the screen for the ready state and freeze the player
 		gameText.text = readyText;
+		GamePanel.SetActive (true);
 		freezePlayer ();
 		fails = 0;
 		// get the audio clip of the level's background music
@@ -128,19 +130,23 @@ public class GameController : MonoBehaviour {
 
 	// Starts the game by switching the game's state to ready and clearing the text on the screen.
 	// Also unfreezes the player.
+	// Deactivates the game message panel.
 	// Precondition: can only call this method if the game is currently in the ready state
 	private void beginGame () {
 		gameState = State.playing;
 		gameText.text = "";
+		GamePanel.SetActive(false);
 		unfreezePlayer ();
 	}
 
 	// Puts the game in the ready state, resets the game, and switches the text on the screen to the
 	// ready message.
+	// Activates the game panel.
 	// Precondition: the game is currently in the gameOver state
 	private void getReady () {
 		gameState = State.ready;
 		resetGame ();
+		GamePanel.SetActive(true);
 		gameText.text = readyText;
 	}
 
@@ -157,11 +163,12 @@ public class GameController : MonoBehaviour {
 	}
 
 	// handles the game when the player reaches Earth (this is a victory)
-	// Switches the gameState to victory and switches the gameText to the victory message.
+	// Switches the gameState to victory and switches the gameText to the victory message and activates the game panel.
 	// Also freezes the player and stops the background music.
 	// Updates the best score for this level
 	public void victory () {
 		gameState = State.victory;
+		GamePanel.SetActive(true);
 		gameText.text = victoryText;
 		freezePlayer ();
 		music.Stop ();
@@ -186,6 +193,7 @@ public class GameController : MonoBehaviour {
 	public void gameOver (string loser) {
 		gameState = State.gameOver;
 		fails += 1;
+		GamePanel.SetActive(true);
 		failText.text = "Times Failed: " + fails;
 		switch (loser) {
 			case "crash":

@@ -26,9 +26,11 @@ public class DestroyOnContact : MonoBehaviour {
 	// the explosion effect animation is played with sound, and the player gets a game over.
 	void OnTriggerEnter (Collider other) {
 		if (other.tag == "Player") {
-			Instantiate (playerExplosion, other.transform.position, other.transform.rotation);
 			Destroy (other.gameObject);
-			gameController.gameOver ("crash"); // initiates a gameOver when the player crashes
+			if (gameController.gameState == GameController.State.playing) {
+				gameController.gameOver ("crash"); // initiates a gameOver when the player crashes
+				Instantiate (playerExplosion, other.transform.position, other.transform.rotation);
+			}
 		}
 	}
 }
